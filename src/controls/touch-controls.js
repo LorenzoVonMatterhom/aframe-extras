@@ -82,6 +82,7 @@
 
   onTouchMove: function onTouchMove(e) {
     if (e.touches.length === 2) {
+      //lets see if it works
       var pinchDelta = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
       this.direction = (this.previousPinchDelta - pinchDelta)*this.data.speed;
       this.previousPinchDelta = pinchDelta;
