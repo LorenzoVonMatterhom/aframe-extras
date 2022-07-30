@@ -14,6 +14,7 @@
     this.direction = 0;
     this.lateralDirection = 0;
     this.previousPinchDelta = 0;
+    this.previousAveragePosition = {x: 0, y: 0}
   },
 
   play: function play() {
@@ -78,6 +79,7 @@
     if (e.touches.length === 2) {
       var pinchDelta = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
       this.previousPinchDelta = pinchDelta;
+      this.previousAveragePosition = {x: (e.touches[0].pageX + e.touches[1].pageX)/2, y: (e.touches[0].pageY + e.touches[1].pageY)/2}
     }
     e.preventDefault();
   },
@@ -86,9 +88,11 @@
     if (e.touches.length === 2) {
       //lets see if it works
       var pinchDelta = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+      var averagePosition = {x: (e.touches[0].pageX + e.touches[1].pageX)/2, y: (e.touches[0].pageY + e.touches[1].pageY)/2}
       this.direction = (this.previousPinchDelta - pinchDelta)*this.data.speed;
-      this.lateralDirection = 1;
-      this.previousPinchDelta = pinchDelta;
+      this.lateralDirection = Math.hypot(averagePosition.x - this.previousAveragePosition.x, averagePosition.y - this.previousAveragePosition.y)*this.data.speed
+      this.previousAveragePosition = averagePosition
+      this.previousPinchDelta = pinchDelta
     }
     e.preventDefault();
   },
