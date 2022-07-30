@@ -10,6 +10,7 @@
     "url": "git+https://github.com/donmccurdy/aframe-extras.git"
   },
   "scripts": {
+    "start": "node server.js",
     "dev": "budo --live --port=9000 index.js:examples/bundle.js -- -t [ babelify --presets [ env ] ]",
     "build": "browserify index.js -o examples/bundle.js -t [ babelify --presets [ env ] ]",
     "dist": "./scripts/dist.js",
@@ -28,6 +29,7 @@
     "aframe": "*"
   },
   "dependencies": {
+    "express": "^4.18.1",
     "three-pathfinding": "^0.14.0"
   },
   "devDependencies": {
@@ -56,6 +58,7 @@
     "replace": "^0.3.0",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
+    "three": "^0.111.0",
     "uglify-es": "^3.1.0",
     "watch-exec": "^1.2.2"
   },
