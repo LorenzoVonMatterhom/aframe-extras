@@ -90,7 +90,7 @@
       var pinchDelta = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
       var averagePosition = {x: (e.touches[0].pageX + e.touches[1].pageX)/2, y: (e.touches[0].pageY + e.touches[1].pageY)/2}
       this.direction = (this.previousPinchDelta - pinchDelta)*this.data.speed;
-      this.lateralDirection = Math.hypot(averagePosition.x - this.previousAveragePosition.x, averagePosition.y - this.previousAveragePosition.y)*this.data.speed
+      this.lateralDirection = (averagePosition.x - this.previousAveragePosition.x)*this.data.speed
       this.previousAveragePosition = averagePosition
       this.previousPinchDelta = pinchDelta
     }
