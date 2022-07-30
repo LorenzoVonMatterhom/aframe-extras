@@ -59788,7 +59788,9 @@ module.exports = AFRAME.registerComponent('touch-controls', {
     this.dVelocity = new THREE.Vector3();
     this.bindMethods();
     this.direction = 0;
+    this.lateralDirection = 0;
     this.previousPinchDelta = 0;
+    this.previousAveragePosition = { x: 0, y: 0 };
   },
 
   play: function play() {
@@ -59835,6 +59837,7 @@ module.exports = AFRAME.registerComponent('touch-controls', {
 
   getVelocityDelta: function getVelocityDelta() {
     this.dVelocity.z = this.direction;
+    this.dVelocity.x = this.lateralDirection;
     return this.dVelocity.clone();
   },
 
@@ -59852,6 +59855,8 @@ module.exports = AFRAME.registerComponent('touch-controls', {
     if (e.touches.length === 2) {
       var pinchDelta = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
       this.previousPinchDelta = pinchDelta;
+      this.previousAveragePosition.x = (e.touches[0].pageX + e.touches[1].pageX) / 2;
+      this.previousAveragePosition.y = (e.touches[0].pageY + e.touches[1].pageY) / 2;
     }
     e.preventDefault();
   },
@@ -59859,7 +59864,9 @@ module.exports = AFRAME.registerComponent('touch-controls', {
   onTouchMove: function onTouchMove(e) {
     if (e.touches.length === 2) {
       var pinchDelta = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+      var averagePosition = { x: (e.touches[0].pageX + e.touches[1].pageX) / 2, y: (e.touches[0].pageY + e.touches[1].pageY) / 2 };
       this.direction = (this.previousPinchDelta - pinchDelta) * this.data.speed;
+      this.lateralDirection = Math.hypot(averagePosition.x - previousAveragePosition.x, averagePosition.y - previousAveragePosition.y) * this.data.speed;
       this.previousPinchDelta = pinchDelta;
     }
     e.preventDefault();
@@ -59867,6 +59874,7 @@ module.exports = AFRAME.registerComponent('touch-controls', {
 
   onTouchEnd: function onTouchEnd(e) {
     this.direction = 0;
+    this.lateralDirection = 0;
     e.preventDefault();
   }
 });
