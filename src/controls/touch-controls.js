@@ -79,8 +79,7 @@
     if (e.touches.length === 2) {
       var pinchDelta = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
       this.previousPinchDelta = pinchDelta;
-      this.previousAveragePosition.x = (e.touches[0].pageX + e.touches[1].pageX)/2
-      this.previousAveragePosition.y = (e.touches[0].pageY + e.touches[1].pageY)/2;
+      this.previousAveragePosition = {x: (e.touches[0].pageX + e.touches[1].pageX)/2, y: (e.touches[0].pageY + e.touches[1].pageY)/2};
     }
     e.preventDefault();
   },
@@ -92,6 +91,7 @@
       this.direction = (this.previousPinchDelta - pinchDelta)*this.data.speed;
       this.lateralDirection = Math.hypot(averagePosition.x - previousAveragePosition.x, averagePosition.y - previousAveragePosition.y)*this.data.speed;
       this.previousPinchDelta = pinchDelta;
+      this.previousAveragePosition = averagePosition;
     }
     e.preventDefault();
   },
