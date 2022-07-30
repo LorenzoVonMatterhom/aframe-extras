@@ -12,6 +12,7 @@
     this.dVelocity = new THREE.Vector3();
     this.bindMethods();
     this.direction = 0;
+    this.lateralDirection = 0;
     this.previousPinchDelta = 0;
   },
 
@@ -59,6 +60,7 @@
 
   getVelocityDelta: function getVelocityDelta() {
     this.dVelocity.z = this.direction;
+    this.dVelocity.x = this.lateralDirection;
     return this.dVelocity.clone();
   },
 
@@ -85,6 +87,7 @@
       //lets see if it works
       var pinchDelta = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
       this.direction = (this.previousPinchDelta - pinchDelta)*this.data.speed;
+      this.lateralDirection = 1;
       this.previousPinchDelta = pinchDelta;
     }
     e.preventDefault();
@@ -92,6 +95,7 @@
 
   onTouchEnd: function onTouchEnd(e) {
     this.direction = 0;
+    this.lateralDirection = 0;
     e.preventDefault();
   }
 });
