@@ -61,7 +61,7 @@
 
   getVelocityDelta: function getVelocityDelta() {
     this.dVelocity.z = this.direction;
-    this.dVelocity.x = this.lateralDirection;
+    //this.dVelocity.x = this.lateralDirection;
     return this.dVelocity.clone();
   },
 
